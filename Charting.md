@@ -1,148 +1,159 @@
-This is a general documentation on the chart files used in the game. These files indicate the structure of the song, such as note placement and tempo.
+ゲーム内で使用されている譜面ファイル(c2s)に関する参考資料です。このファイルは、c2sの音符の配置やBPMなど、曲の構造を示しています。
 
-# Things to know
+# 前提で知っておいたほうがいいこと
 
-* This document is not guaranteed to be 100% accurate. Some tag definitions are based on assumptions and might require further testing.
-* Most counting in this file format starts from 0. A measure of 0 means at the beginning of the song, a cell of 0 means the first cell on the left, etc.
-* The location for chart files can be found in ``root¥app¥data¥AXXX¥music¥musicXXXX``. The file format for charts is ``.c2s``, and are plain text files that can be opened in tools like Notepad++.
-* A cell is the corresponding key for the note on the playfield. The playfield has 16 columns, numbers from 0-15 from left to right.
-* A measure is a function of time containing a specific amount of beats. Each measure usually contains 4 beats, and stays relatively consistent throughout the song.
-* From my experience, Chunithm will usually ignore a note unless it is formatted in a very specific way. In an existing chart file, using tab instead of space to add modifiers to notes works, while using space doesn't. This is exclusive to Notepad++ in my experience.
-* Chunithm reloads ``.c2s`` files on selection. This means that it's possible to debug custom charts by simply reselecting the song that is being changed. To streamline this process, use a DANGER skill such as "今わの際" (skill ID 102005), and place ≈20 TAP notes a few measures after your custom notes. This way, you will automatically fail the track and be able to reselect the track much faster, rather than waiting for the song to finish.
+* この資料は100％正確であることを保証するものではありません。一部のタグ等は仮定に基づくものであり、さらなる研究が必要な場合があります。
+* c2s譜面ファイルフォーマットでは、大体のカウントは0から始まります。0小節は曲の始まり、0セルは左の最初のセル、などを意味します。
+* 譜面ファイルの場所は「root¥app¥data¥AXXX¥music¥musicXXXX」にあります。譜面ファイルのファイル形式は前述で何回も言っている通り「.c2s」で「Notepad++」などのツールで開けるプレーンテキストファイルです。
+* セルは、プレイフィールド上の音符に対応する鍵盤です。プレイフィールドは16列で、左から0～15の数字が並んでいます。
+* 小節は、特定の拍数を含む時間の関数です。各小節は基本的に4拍で構成されており、曲全体を通して比較的一定です。
+* 自分の経験的に、Chunithmは、譜面ファイルが非常に特殊な方法で書かれているため、既存の書き方に乗っ取っていない書き方の場合、記述されたノーツは描画されません。。既存の譜面ファイルでは、ノーツに修飾を加えるためにスペースキーではなく、タブキーを使うとうまくいきます。スペースキーでやるとうまくいきません。（なおこれはNotepad++を使った場合の話です、別のやつとか使ったら違うかも。）
+* Chunithmは、選択時に「.c2s」ファイルを再読み込みします。てことはだよ？、変更される曲を再選択するだけで、カスタム譜面をデバッグすることが可能なんです！この作業を効率化するために、"今わの際 "などのDANGERスキルを使用する。※1(スキルID 102005）を使用し、カスタムノーツの数小節後に≈20 TAPノートを配置します。こうすることで、曲が終わるのを待たずに、自動的に終了し、より早く再選択することができます。
 
-# Tags
+※1 CHUNITHM NEWであるかどうかは忘れました。
+
+
+# タグ達
 
 ## VERSION
 
-Usually set to 1.08.00. (denotes the version of the ``.c2s`` handler that the chart is designed for?)
+バージョンが設定されているよ。よくわからんけど、まあ「1.08.00」にしたら動くからこれでいいと思う。(CHUNITHM自体のバージョンかなと思ったんだけどちがそうだしよくわからん)
 
 ## MUSIC
 
-Usually set to 0. Likely used to be the ID for the Music before the ``Music.xml`` file contained it.
+まあこれは大体「0」になってる。(昔のバージョンとか、Music.xmlがなかったからその時のタグが残りっぱなしなんだと思う)
 
 ## SEQUENCEID
 
-Usually set to 0.
+これもだいたい「0」
 
 ## DIFFICULT
 
-Usually set to 00. Likely used to be the difficulty (BASIC, ADVANCED, EXPERT, MASTER, WORLD'S END) for the Music before the ``Music.xml`` file contained it.
+これもですね、うん大体「0.0」になってるよ。(さっきも言ったけど、昔のバージョンとかMusic.xmlがなかったからその時のタグだと思うよ。)
 
 ## LEVEL
 
-Usually set to 0.0. Likely used to be the level for the chart file before ``Music.xml`` contained it.
+言わずもがな、これも「0.0」になってます。(3回目ですけど、うん、昔のバージョンとかMusic.xmlがなかったらその時のタグだと思うよ。)
 
 ## CREATOR
 
-Designates the creator of the chart file. Note that this string will appear on the bottom left of the song's card on the song selection screen unless the difficulty is set to BASIC or ADVANCED.
+譜面製作者の名前だよー。難易度がBASICとかADVANCEDになってない限り選曲画面の曲の左下に名前が表示されるよ！
 
 ## BPM_DEF
 
-Designates the default BPM.
+名前のまんま。デフォルトのBPM
 
-### Schema:
+### スキーマ(図):
 
 | 1 | 2 | 3 | 4 |
 | ---- | ---- | ---- | ---- |
 
-1 usually contains the true default BPM, or the BPM that the song starts with. 2 usually contains the alternative BPM, or the BPM that the song has the most often besides the BPM in 1. If there is no alternative BPM, then 2 mirrors 1. 3 and 4 seem to mirror 2 and 1 respectively.
+「1」は通常、デフォルトBPMです。つまり曲の始まりのBPMだよ。「2」は通常とか、あとは別のBPM、まあ要は、「1」が頻繁に使うやつだとしたらその次に頻繁に使うBPM的な？
+まあ別のBPMがないんだったら、「2＝1」でいいよ。「3」と「4」は「2」と「1」と同じらしい。
+
 
 ## RESOLUTION
 
-Denotes the resolution of the song. Always set to 384.
+曲の解像度を指定するよ。ここは絶対「384」になってるよ。
 
 ## CLK_DEF
 
-Always set to 384.
+ここも絶対「384」になってる。
 
 ## PROGJUDGE_BPM
 
-Always set to 240.000.
+ここは「240.000」に絶対なってるよ。
 
 ## PROGJUDGE_AER
 
-Always set to 0.999.
+ここはね～毎回「0.999」になってるんだよね。わあすごい。
 
 ## TUTORIAL
 
-Designates whether or not the specified track is a tutorial track.
+この譜面がチュートリアルの譜面かどうかだよ。
 
 ## BPM
 
-Designates the BPM for the specified measure of the song.
+見たらわかるくない？BPMです。BPM。
 
-### Schema:
+### スキーマ(図):
 
-| Beginning Measure | Offset | BPM |
+| 開始小節 | オフセット | BPM |
 | ---- | ---- | ---- |
 
 ## MET
 
-Designates the time signature for the specified measure of the song.
+曲の拍子だよ。
 
 ### Schema:
 
-| Beginning Measure | Offset | Second Value | First Value |
+| 開始小節 | オフセット | 2番目の値 | 1番目の値 |
 | ---- | ---- | ---- | ---- |
 
-It is very important to note that the values for the time signature are in reverse. It is also worth mentioning that this is purely cosmetic. The only thing that this value will affect is the placement of the thin measure lines on the playfield.
+拍子の値が逆になってるのは、非常に非常に重要だよ。あと、これは結構外観上のことだよっていうことを言っておく。
+この値が影響するのはプレイフィールド上の細かい小節線の配置だけだよ。
 
 ## SFL
 
-Designates the speed of the playfield at the specified measure of the song.
+指定された小節でのスクロール速度を指定するよ。
 
-### Schema:
+### スキーマ(図):
 
-| Beginning Measure | Offset | Duration | Multiplier |
+| 開始小節 | オフセット | デュレーション | どんだけ早くするか |
 | ---- | ---- | ---- | ---- |
 
-It is important to note that the multiplier must have an accuracy of 0.000001, meaning that it should have six digits after the decimal point. This value will multiply the player's current playfield speed, so notes will appear faster or slower based on this value. This value is purely cosmetic, and will not affect the placement of notes in the .c2s file, only the player will see a difference. This value can also be made negative, which will result in the board moving in reverse, usually used for aesthetic purposes such as [this section of Fracture Ray's MASTER chart](https://youtu.be/5m7bMyIDoec?t=48).
+注意することなんだけど、どんだけ早くするかの値が「0.000001」であること、つまり小数点以下6桁でなければならなきゃいけないんだよね。この数値に基づいてノーツが早くなったり遅くなったりするよ。この値は外観上のもので、マイナスとかにすると逆に動くよ。(太鼓さん次郎のスクロールみたいだよね。)基本的に、[Fracture RayのMASTERチャートのこの部分](https://youtu.be/5m7bMyIDoec?t=48)みたいな、おもしろ目的(？)のために使われるよ。
 
-# Notes
+# ノーツ達
 
-## Universal Note Schema
+## 大体ノーツってこういう感じのスキーマ(図)になってるよ。
 
-| Note Type | Measure | Offset | Cell | Width |
+| ノーツタイプ | 小節 | オフセット | セル | 幅 |
 | ---- | ---- | ---- | ---- | ---- |
 
-### Note Type
+### ノーツタイプ
 
-A note type is the type of note that you want to be placed at this particular point. There are various types of notes that can be used, and most of them will have additional variables that will be appended to the end of the typical schema. There will be more information later on explaining each of these notes.
+ノーツタイプは、特定の場所にに配置したいノーツを記述するものだよ。使えるノーツにはいろんなやつがあるよ。
+下で説明してるから見てね。
 
-#### Note Types:
 
-* TAP (tap)
-* CHR (ex-note)
-* HLD (hold)
-* SLD (slide)
-* SLC (slide control point)
-* FLK (flick)
-* AIR (air)
-* AUR (air up-right)
-* AUL (air up-left)
-* AHD (air hold)
-* ADW (air downwards)
-* ADR (air down-right)
-* ADL (air down-left)
-* MNE (mine)
+#### ノーツの種類:
 
-### Measure
+* TAP (タップ)
+* CHR (ex-タップ(黄色い光るやつ))
+* HLD (ホールド)
+* SLD (スライド)
+* SLC (スライド中継地点)
+* FLK (フリック)
+* AIR (エアー)
+* AUR (右上エアー)
+* AUL (左上エアー)
+* AHD (エアーで手あげたままにするやつ)
+* ADW (エアーダウン)
+* ADR (右下エアー)
+* ADL (左下エアー)
+* MNE (ダメージ(青のやつ))
 
-The measure is the specific measure that you want the note to be placed in. Each measure is (usually) 4 beats. The value starts from 0 and continues infinitely, although should always end with the song.
+### 小節
 
-### Offset
+小節は、音符を配置したい特定の小節を示すものだよ。各小節は（大体）4拍子になってる。値は0から始まって、無限に続くけど、曲が終わったら終わるようにしてね。
 
-A function of time to show how offset a note or timing point should be from the measure. This relies on the resolution of the song, designated by the RESOLUTION tag. The full resolution is an entire measure, so with a resolution of 384, the first beat of a measure would be 0, the second would be 96, the third would be 192, the fourth would be 288. To get the desired beat, divide the resolution by 4, multiply it by the beat that you want, and then subtract it by the resolution divided by 4.
+### オフセット
 
-For a fraction of a beat, divide the resolution by 4, then multiply it by the fraction of the beat you want. Then add that result with the desired beat.
+音符とかタイミングポイントとかがどのタイミングで始めたらいいかの関数だよ。これは、解像度タグで指定された曲の解像度に依存するんだよね。解像度が384の場合(ていうかまあだいたいそうなってるとおもうけど)、小節の最初のビートは「0」、2番目は「96」、3番目は「192」、4番目は「288」となります。自分がやりたい拍子を割り出すためには、解像度を4で割り、それに自分がしたい拍子を掛けてから、解像度を4で割った値を引きます。
 
-The function for this would be:
+端数のビートを得るには、解像度を4で割って、それに必要なビートの端数を掛けます。そして、その結果と希望するビートを足します。
+
+この場合の関数は次のようになります。
+
+b = 小数点以下を切り捨てた自分がしたい拍子
+r = 解像度
+f = 拍子の分数
 
 ```b(r/4)-(r/4) + f(r/4)```
 
-where b is the desired beat rounded down to a whole number, r is the resolution of the song, and f is the fraction of the beat.
 
-For example, if I wanted a note on the 2 1/2th beat of a 4 beat song with a resolution of 384, I would perform the following:
+例えば、解像度が384の4拍子の曲の2拍半の無音が欲しい時は、次のようにしよう。
 
 ```
 2(384/4)-(384/4) + 1/2(384/4)
@@ -150,50 +161,54 @@ For example, if I wanted a note on the 2 1/2th beat of a 4 beat song with a reso
 144
 ```
 
-### Cell
 
-As stated above, the cell is the numerical ID for the column in the playfield that the note should appear in. Note that this value should be the column that the note first appears in **from the left**.
+### セル
 
-### Width
+さっきも書いたけど、この「セル」には、ノーツが表示されるべきプレイフィールドの列の数値IDが入るよ(0～15)。これは、**セルは左から0~15となってること**を注意しておくことが必要だよ。
 
-Separate from the Cell value, the Width value notes how wide the note should be, extending from the value listed in Cell to the right. The minimum value is 1, which means that the note only occupies the column listed in cell. As an example, a width of 3 on a note with a cell value of 7 would have the note occupy columns 7, 8, and 9.
+### 幅
 
-## Additional Note Values
+「セル」の数値とは別に、「幅」の数値は、セルに記載されている数値から**右方向**に伸びる音符の幅を指定するよ。最小値は1で、もし1だったらノーツがセルに記載された列だけ描画されることを意味するよ。
+他に、、セルの数値が7で、ノーツの幅が3だとすると、ノーツはプレイフィールド上のセル番号「7、8、9」列を占めることになるよ。
 
-Most note types require additional information to function correctly. This section will provide an example of the schema that the note uses, followed by an explanation for any values not included in the universal schema. Any values in quotes indicate a value that is consistent with that note.
+## その他ノーツの値に関する情報
 
-### Tap
+大体のノーツ達は、しっかり描画されるために追加の情報を書き込むよ。このセクションでは、ノーツが使用するスキーマ(図)の例を見て、その後、
+一般的なスキーマ(図)に示されていない値について解説するよ。引用符で囲まれた値は、そのノーツと一致する値を載せてるよ。
 
-Tap notes are the most basic notes that can be charted. They simply require the player to hit the cell that the note occupies at the required time.
 
-#### Schema:
+### タップ
 
-| "TAP" | Measure | Offset | Cell | Width |
+タップだよ。まあ言わずもがなだよね、めちゃくちゃ基本形だよ。プレイするときはタップすればいいだけだね。
+
+#### スキーマ(図):
+
+| "Tap" | 小節 | オフセット | セル | 幅 |
 | ---- | ---- | ---- | ---- | ---- |
 
-Tap notes do not differ from the universal schema listed above.
+ん？さっき見た気がするって？ああ。そうそう。タップはさっき説明した基本形と同じだよ。楽だね～。
 
-### Ex-Notes
+### ex-タップ(黄色い光るやつ)
 
-Ex-Notes are similar to tap notes, although they give the player more score for hitting them accurately.
+Ex-タップは普通のタップと似てるけど正確に打てば打つほどスコアが違うよ！
 
-#### Schema:
+#### スキーマ(図):
 
-| "CHR" | Measure | Offset | Cell | Width | Unknown |
+| "CHR" | 小節 | オフセット | セル | 幅 | エフェクトの種類 |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 
-* Unknown: Seems to always have a value of "UP", "CE", or "DW".
+* エフェクトの種類: みんな知ってるかどうかわからないんだけど、CHUNITHMってEx-タップのエフェクトが3種類(あっNEWになって増えたんだっけ？)があるんだよね。それの指定。(UPとかCEとかDWとかあるよ(NEWではもっと増えてるかも！！！))
 
-### Hold
+### ホールド
 
-Hold notes are similar to tap notes, but require the player to keep the designated cell pressed over a continuous period of time.
+これ、一回一回説明する必要ある？まあ一応しとくと、あれね、タップノーツをずっと押す版みたいなね。
 
-#### Schema: 
+#### スキーマ(図): 
 
-| "CHR" | Measure | Offset | Cell | Width | Duration |
+| "CHR" | 小節 | オフセット | セル | 幅 | デュレーション |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 
-* Duration: The amount of time that the note needs to be held down for. This value is based on the same format for offset.
+* デュレーション: どんだけ押し続けるか的な。
 
 ### Slide
 
