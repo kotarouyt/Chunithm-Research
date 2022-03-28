@@ -1,11 +1,11 @@
-ゲーム内で使用されている譜面ファイル(c2s)に関する参考資料です。このファイルは、c2sの音符の配置やBPMなど、曲の構造を示しています。
+ゲーム内で使用されている譜面ファイル(c2s)に関する参考資料です。このファイルは、c2sのノーツの配置やBPMなど、曲の構造を示しています。
 
 # 前提で知っておいたほうがいいこと
 
 * この資料は100％正確であることを保証するものではありません。一部のタグ等は仮定に基づくものであり、さらなる研究が必要な場合があります。
 * c2s譜面ファイルフォーマットでは、大体のカウントは0から始まります。0小節は曲の始まり、0セルは左の最初のセル、などを意味します。
 * 譜面ファイルの場所は「root¥app¥data¥AXXX¥music¥musicXXXX」にあります。譜面ファイルのファイル形式は前述で何回も言っている通り「.c2s」で「Notepad++」などのツールで開けるプレーンテキストファイルです。
-* セルは、プレイフィールド上の音符に対応する鍵盤です。プレイフィールドは16列で、左から0～15の数字が並んでいます。
+* セルは、プレイフィールド上のノーツに対応する鍵盤です。プレイフィールドは16列で、左から0～15の数字が並んでいます。
 * 小節は、特定の拍数を含む時間の関数です。各小節は基本的に4拍で構成されており、曲全体を通して比較的一定です。
 * 自分の経験的に、Chunithmは、譜面ファイルが非常に特殊な方法で書かれているため、既存の書き方に乗っ取っていない書き方の場合、記述されたノーツは描画されません。。既存の譜面ファイルでは、ノーツに修飾を加えるためにスペースキーではなく、タブキーを使うとうまくいきます。スペースキーでやるとうまくいきません。（なおこれはNotepad++を使った場合の話です、別のやつとか使ったら違うかも。）
 * Chunithmは、選択時に「.c2s」ファイルを再読み込みします。てことはだよ？、変更される曲を再選択するだけで、カスタム譜面をデバッグすることが可能なんです！この作業を効率化するために、"今わの際 "などのDANGERスキルを使用する。※1(スキルID 102005）を使用し、カスタムノーツの数小節後に≈20 TAPノートを配置します。こうすることで、曲が終わるのを待たずに、自動的に終了し、より早く再選択することができます。
@@ -85,7 +85,7 @@
 
 曲の拍子だよ。
 
-### Schema:
+### スキーマ(図):
 
 | 開始小節 | オフセット | 2番目の値 | 1番目の値 |
 | ---- | ---- | ---- | ---- |
@@ -136,11 +136,11 @@
 
 ### 小節
 
-小節は、音符を配置したい特定の小節を示すものだよ。各小節は（大体）4拍子になってる。値は0から始まって、無限に続くけど、曲が終わったら終わるようにしてね。
+小節は、ノーツを配置したい特定の小節を示すものだよ。各小節は（大体）4拍子になってる。値は0から始まって、無限に続くけど、曲が終わったら終わるようにしてね。
 
 ### オフセット
 
-音符とかタイミングポイントとかがどのタイミングで始めたらいいかの関数だよ。これは、解像度タグで指定された曲の解像度に依存するんだよね。解像度が384の場合(ていうかまあだいたいそうなってるとおもうけど)、小節の最初のビートは「0」、2番目は「96」、3番目は「192」、4番目は「288」となります。自分がやりたい拍子を割り出すためには、解像度を4で割り、それに自分がしたい拍子を掛けてから、解像度を4で割った値を引きます。
+ノーツとかタイミングポイントとかがどのタイミングで始めたらいいかの関数だよ。これは、解像度タグで指定された曲の解像度に依存するんだよね。解像度が384の場合(ていうかまあだいたいそうなってるとおもうけど)、小節の最初のビートは「0」、2番目は「96」、3番目は「192」、4番目は「288」となります。自分がやりたい拍子を割り出すためには、解像度を4で割り、それに自分がしたい拍子を掛けてから、解像度を4で割った値を引きます。
 
 端数のビートを得るには、解像度を4で割って、それに必要なビートの端数を掛けます。そして、その結果と希望するビートを足します。
 
@@ -168,7 +168,7 @@ f = 拍子の分数
 
 ### 幅
 
-「セル」の数値とは別に、「幅」の数値は、セルに記載されている数値から**右方向**に伸びる音符の幅を指定するよ。最小値は1で、もし1だったらノーツがセルに記載された列だけ描画されることを意味するよ。
+「セル」の数値とは別に、「幅」の数値は、セルに記載されている数値から**右方向**に伸びるノーツの幅を指定するよ。最小値は1で、もし1だったらノーツがセルに記載された列だけ描画されることを意味するよ。
 他に、セルの数値が7で、ノーツの幅が3だとすると、ノーツはプレイフィールド上のセル番号「7、8、9」列を占めることになるよ。
 
 ## その他ノーツの値に関する情報
@@ -215,7 +215,7 @@ Ex-タップは普通のタップと似てるけど正確に打てば打つほ�
 あれあれ、あのーそう、ホールドノーツと似てるけど、スライドノーツは押しながら移動できるんだね...というかさっきから思ってるけどこの資料読んでる人絶対こういう知識あるよね、これ毎回説明する必要あります？
 スライドノーツには、SLDとSLCの2種類があるよ。直線で始まるスライドはSLDで始まり、すぐに動き出すスライドはSLCで始まる。すべてのスライドはSLDノートで終わる。
 
-#### Schema:
+#### スキーマ(図):
 
 | "SLD"/"SLC" | 小節 | オフセット | セル | 幅 | デュレーション | 終わるセル | 終わる幅 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -224,72 +224,75 @@ Ex-タップは普通のタップと似てるけど正確に打てば打つほ�
 * 終わるセル: スライドの継続時間中にスライドが移動する列。セルの値と同様に、0～15の範囲で設定できるよ。スライドが持続時間中、まっすぐなままなようにするには、終わるセルの値をセルの値と同じにする。
 * 終わる幅: 持続時間の終了時になってるスライド幅だよ。幅の値とおんなじように、この値は0～15の間の任意の場所に設定することができるよ。終わる幅が幅と違ったら、スライドの途中ででかくなったり小さくなったりするよ。
 
-スライドは、その時点で別のスライドがある同じセルでSLDを呼び出すまで、その後に別のスライドが続くことなく終了します。連続したスライドの途中でSLDを呼び出すと、
-その特定のポイントに青い音符が追加されますが、これは純粋に外観上のものです。別の音符を追加せずにスライドを調整するには、SLCを使用します。
+スライドは、別のスライドがある同じセルでSLDを呼び出すまで、その後に別のスライドが続くことなく終了します。連続したスライドの途中でSLDを呼び出すと、
+その特定のポイントに青いノーツが追加されますが、これは純粋に外観上のものです。別のノーツを追加せずにスライドを調整するには、SLCを使用します。
 
-スライダーが左右に激しく揺れるのは、ゲームに組み込まれた機能ではなく、単にスライダーが非常に短いオフセットで数セル左右に動くだけのものです。
+スライドは、プレイフィールド上のセルでSLDを呼び出さないと、すぐに終了されちゃうよ。スライドの途中でSLDを呼び出すと
+青いノーツが追加されるよ。けどまあ外観上のものだよ。音は出るけどね。見えないように調整するにはSLCを使用しよう。
 
-### Flick
+スライドがなんか色々綺麗に曲がったり色々するのはそういうのがあるんじゃなくてすっげえ小さい値の中でこのスライド関数が呼び出されてるからだよ。(下に説明あり。)
 
-A flick note involves the player having their finger within the cells that the flick inhabits, and then swiping in any horizontal direction.
+### フリック
 
-#### Schema:
+...言う必要あるこれ？えっと、フリックです。横にフリックします。以上です。
 
-| "FLK" | Measure | Offset | Cell | Width | Unknown |
+#### スキーマ(図):
+
+| "FLK" | 小節 | オフセット | セル | 幅 | エフェクトの種類 |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 
-* Unknown: Always has a value of "L". Note that this is not the direction of the flick, flick notes can be hit from either direction.
+* エフェクトの種類: まあ、基本的にLでいいよ。多分Rもある。あれね、フリックした時によく見ると下の方にエフェクトが見えるんだけどその方向だと思うよ。
 
-### Air
+### エアー
 
-An air note involves the player raising their hands through the IR sensors above the physical keyboard. Unlike other notes, these notes act as modifiers for already existing notes. There are also different cosmetic versions of the note, however they each function identically.
+エアーだよエアー！手をあげよう！ウェイ！（?a）
 
-#### Schema:
+#### スキーマ(図):
 
-| "AIR"/"AUR"/"AUL" | Measure | Offset | Cell | Width | Target Note |
+| "AIR"/"AUR"/"AUL" | 小節 | オフセット | セル | 幅 | どのノーツにつけるか |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 
-* AIR/AUR/AUL: Each of these note types are identical functionality-wise, although affect the appearance of the arrow above the note. AIR has an upwards arrow, AUR has an up-right arrow, and AUL has an up-left arrow.
-* Target Note: This value designated what note the Air note "leeches" off of. You should have this note be in the same cell, measure, and offset as the Air note. It's also recommended to only use this note at the end of a note, rather than in the middle of a sustained note. This recommendation can be discarded for high-level charts.
+* AIR/AUR/AUL: AIRは上向き。AURは右上。AULは左上。最後のLとRで見ればわかりやすいね～。(絶対AIR UP LEFT/RIGHTの略だよね)
+* どのノーツにつけるか: エアーノーツがどのノーツから出るかを指定するよ。つけたいノーツは、エアーノーツと同じセル、小節、あとはオフセットを同じにする必要があるよ。
 
-## Air Hold
+## エアーホールド
 
-An air hold note involves having the player hold their hands up towards the sensor after performing an air note. Air holds will always end with a mid-air downwards note automatically.
+手あげたままにするやつ。上手い人がくるくるやってるやつ。
 
-#### Schema:
+#### スキーマ(図):
 
-| "AHD" | Measure | Offset | Cell | Width | Target Note | Duration |
+| "AHD" | 小節 | オフセット | セル | 幅 | どのノーツにつけるか | デュレーション |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 
-* Target Note: This value designated what note the Air note "leeches" off of. You should have this note be in the same cell, measure, and offset as the Air note. It's also recommended to only use this note at the end of a note, rather than in the middle of a sustained note. This recommendation can be discarded for high-level charts.
-* Duration: The amount of time that the note will take to move to the target cell. This value is based on the same format for offset.
+* どのノーツにつけるか: エアーホールドがどの場所からするかを指定するよ。したいところで、エアーノーツと同じセル、小節、あとはオフセットを同じにする必要があるよ。
+* デュレーション: どんだけ押し続けるか的な。さっき説明したオフセットとおんなじ感じの値の計算方法を使ってるよ
 
-To have mid-air downwards notes in a sustained air note, make the first air hold note last until the point where the mid-air note would be, then add another air hold note that starts at the same offset where the preceeding air hold note ends.
+エアーアクションを作るためには、最初のエアーホールドを、エアーアクションを作りたいところまで作って、その後最初のエアーホールドと同じオフセットで開始する別のエアーホールドノーツを作るよ。
 
-### Downwards
+### エアーアクション
 
-A downwards note involves the player lowering their hands through the IR sensors above the physical keyboard. Unlike other notes, these notes act as modifiers for already existing notes. There are also different cosmetic versions of the note, however they each function identically.
+エアー中に手を下げるやつ。NEWだとここらへんがどうなってるかは知らん。なんか横とか動いてるし変わってそうだよね（笑）(←見てない)
 
-#### Schema:
+#### スキーマ(図):
 
-| "ADW"/"ADR"/"ADL" | Measure | Offset | Cell | Width | Target Note |
+| "ADW"/"ADR"/"ADL" | 小節 | オフセット | セル | 幅 | どのノーツにつけるか |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 
-* ADW/ADR/ADL: Each of these note types are identical functionality-wise, although affect the appearance of the arrow above the note. ADW has a downwards arrow, ADR has a down-right arrow, and ADL has a down-left arrow.
-* Target Note: This value designated what note the downwards note "leeches" off of. You should have this note be in the same cell, measure, and offset as the downwards note. It's also recommended to only use this note at the end of a note, rather than in the middle of a sustained note. This recommendation can be discarded for high-level charts.
+* ADW/ADR/ADL: ADRが右下(AIR DOWN RIGHTの略だよね絶対) ADLが左下だよ。
+* どのノーツにつけるか: エアーアクションをどこでするかを指定するよ。する場所と同じセル、小節、あとはオフセットを同じにする必要があるよ。
 
-### Mines
+### 青のビリビリしてる痛いやつ
 
-A mine note involves the player not touching the cell that the mine is placed on. Touching the cell will result in the player losing score and possibly failing the track.
+触っちゃだめだよ！World ENDでしか見たことないの自分だけ？
 
-| "MNE" | Measure | Offset | Cell | Width |
+| "MNE" | 小節 | オフセット | セル | 幅 |
 | ---- | ---- | ---- | ---- | ---- |
 
-Mine notes require the same information as Tap notes, and simply follow the universal schema mentioned above.
+タップとおんなじだね～。
 
-# Notes Demonstration
+# ここでノーツのデモンストレーションをしよう
 
-Below is a recreation of the MASTER difficulty chart for Cyaegha, which has a RESOLUTION of 386.
+下のこれは解像度が386でCyaeghaのMASTERを再現したものだよ。
 
 ```
 TAP	8	0	6	4
@@ -315,43 +318,47 @@ TAP	9	288	3	4
 TAP	9	288	9	4
 ```
 
-Below is what the gameplay for this section looks like. This will be broken down into each line of the excerpt above to see their corresponding patterns in gameplay.
+どんな感じになってるのか分解して見ていこう。
 
 ![Demonstration of Cyaegha Excerpt](https://raw.githubusercontent.com/Suprnova123/Chunithm-Research/main/_assets/cyaegha%20example.gif)
 
-The two tap notes at the beginning appear as:
+まず冒頭の２つのタップ
 ```
 TAP	8	0	6	4
 TAP	8	0	12	4
 ```
 
-The order of values in these lines is the following:
+こんな感じになってるよ
 
-``Tap note | on the 8th measure | with an offset of 0 | starts on cell 6/cell 12 | extends 4 cells to the right``
+``タップノーツ | 8小節目 | オフセットは0 | 6セルと12セルから出発 |  4セル分右に伸びてるよ``
 
-You can tell that these notes are supposed to occur at the same time because they share the same measure and offset. Remember that the cells are labelled as 0-15, meaning that the first cell on the left is cell 0.
 
-The next two notes are a slide and a tap that occur at the same time. These appear in the document as:
+小節とオフセットが同じだから同時に来てるよね！。１番左からセルの番号は0～16ということを忘れないでおこうね。
+
+次の２つのノーツはタップとスライドだよ。c2s内ではこうなってるね～。
 ```
 SLC	8	96	4	4	7	3	4
 TAP	8	96	10	4
 ```
 
-Note that the slide has the note type of SLC, since the slider starts in motion. If the slider was stationary at the beginning, it would've had an SLD note type.
+スライダーがすぐ動いたから今回はSLCだったね～もしスライドが止まってたらSLDだったね。
 
-The order of values for the slide note is the following:
+そして、こうなってるよ
 
-``Slide note | on the 8th measure | with an offset of 96 | starts on cell 4 | extends 4 cells to the right | has a duration of 7 resolution | ends on cell 3 | ends with a width of 4``
+``スライドノーツ | 8小節目 | オフセット96 | 4セル目 | 4セル分右へ伸びる | ディレーション7 | 3セルで終わる | 終わりの幅は4``
 
-There are a few important things to note here. For one, with a measure of 8 and an offset of 96, this means that the note happens on the second beat of the 8th measure (remember, an offset of 0 means the first beat). It also has a very short duration, at only 7 resolution. This means that the slider only lasts for almost 2/100th of a measure. The reason it's so short is because it's designed to look like a curve. There are later SLC notes that attach to the first slider that gradually change to the shape to a curve.
+ここでまず重要なことがあるんだけど、まず、小節が8でオフセットが96ということは、このノーツは8小節の2拍目に発生することを意味するよね？（オフセット0は1泊目だよ...）。
+あと、ノーツの長さもめっちゃ短いじゃん。ディレーション7しかない、つまり、スライダは1小節のほぼ100分の2しか続かないということなんだ。こんなに短いのは、カーブを作るためだよ。
+最初のスライダーノーツに、カーブにするためのノーツがついてるんだよね。(ベジェ曲線とか使ってないの凄いよね。)
 
-The tap note later on has an order of values of:
+タップノーツはこうなってるよ
 
-``Tap note | on the 8th measure | with an offset of 96 | starts on cell 10 | extends 4 cells to the right``
+``タップノーツ | 8小節目 | オフセット96 | セル10からスタート | 4セル分右へ``
 
-Again, since the two notes occur at the same measure and offset, they are simultaneous.
+ここでも同じ小節と同じオフセットだから２つのノーツは同時だね～。
 
-The next notes are several control points for a slider, as well as creating a new slider, and a tap note. Their lines are:
+次にくるのは、スライダーの中継地点と、新しいスライダーの作成、そしてタップノーツです。
+それはこうなってます：
 ```
 SLC	8	103	3	4	10	2	4
 SLC	8	113	2	4	13	1	4
@@ -366,9 +373,13 @@ SLC	8	325	11	4	23	12	4
 SLD	8	348	12	4	36	12	4
 ```
 
-There are several important things to note here. For one, the SLCs at the top are within very quick succession of each other. As stated above, this is because it's creating a curved slider, so it's very precise to look smooth. There is also an SLD immediately after it, which has a duration of 236 resolution. This is important because you can see that this slider is supposed to end at the same time as the other slider. If you add together the offset, which is 148, and the duration, you'll get a value of 384. If you add together the offset and duration of the second SLD at the bottom, you also get 384. Since they are both on the same measure, this shows that they will end at the same time as each other. It's also worth mentioning that the second pair of SLCs are not related to the first pair. They start on a separate cell from the other slider, so it creates a new slider instead of extending a previous one.
+さてさて、又々重要なことだ。一つ目は、スライドノーツがめっちゃ連続して置いてあることなんだよね、まあこれはさっき言ったけど、これはきれいなカーブスライドを作るためだね。
+その直後にSLDがあって、こちらは236のデュレーションとなっているよ。このスライダーは他のスライダーと同じタイミングで終了することになっていることがわかるね、
+これはとても重要だよ。オフセット（148）とデュレーションを足すと、384という値になり、一番下の2番目のSLDのオフセットとデュレーションを足すと、384になります。同じ小節にあるので、互いに同じ時刻に終了することがわかるね。
+また、2つ目のSLCのペアは、1つ目のペアとは関係ないよ。他のスライダーとは別のセルで始まるから、前のスライダーを延長するんじゃなくて、新しいスライドを生成するよ。
 
-The final part of the excerpt contains several air notes, an air hold, an ex-note, and several tap notes. These appear in the file as:
+最後の部分には、エアーとエアーホールドとタップノーツかな？
+こんな感じになってるよ：
 ```
 AHD	9	0	0	4	SLD	192
 CHR	9	0	4	8	CE
@@ -378,74 +389,80 @@ TAP	9	288	3	4
 TAP	9	288	9	4
 ```
 
-You'll notice that both AHDs, the AIR, and the CHR notes all start at the same time, since they share the same measure and offset. Let's break down each note.
+AHDもAIRもCHRも、小節とオフセットが共通なので、同じタイミングで始まっていることがわかるね。それでは、それぞれのノーツを分解して見てみよう！
 
-The AHD notes represents the following:
+AHDノーツ:
 
-``Air hold note | on the 9th measure | with an offset of 0 | starts on the 0th cell/12th cell | extends to the right by 4 cells | leaches off of the Slider note that occupies that same cell | has a duration of 192 resolution``
+``エアーホールド | 9小節目 | オフセット0 | 0セル/12セルからスタート | 4セル分伸びる | SLDノーツと同じところから読み取る | デュレーション192``
 
-The CHR note represents:
+ex-タップノーツ:
 
-``Ex-note | on the 9th measure | with an offset of 0 | starts on the 4th cell | extends to the right by 8 cells | CE modifier``
+``ex-タップ | 9小節目 | オフセット0 | 4セル分伸びる | 8セル分伸びる | エフェクトの種類CE``
 
-The AIR note represents:
+AIRノーツ:
 
-``Air note | on the 9th measure | with an offset of 0 | starts on the 4th cell | extends to the right by 8 cells | leaches off of the ex-note that occupies the same cell``
+``エアー | 9小節目 | オフセット0 | 4セル分伸びる | 8セル分伸びる | Ex-タップとおんなじところ``
 
-The excerpt finally ends with two TAP notes, which mean the following:
+タップノーツ:
 
-``Tap note | on the 9th measure | with an offset of 288 | starts on the 3rd/9th cell | extends to the right by 4 cells``
+``Tap note | 9小節目 | オフセット288 | 3セル/9セルからスタート | 4セル分伸びる``
 
-This concludes the analysis of this excerpt of Cyaegha.
+以上でCyaeghaの抜粋部分解説を終わりにします。
 
-# Ending Tags
+# 終わりのタグ
 
-**Note:** Although resulting from minimal testing, these values do not seem to influence the functionality of the track. As such, they can be completely ignored when creating custom tracks.
+**ノート:** これ書いても書かなくても変わらんらしい、カスタムチャートやる場合は無視でOK
 
 ## T_REC_XXX
 
-``XXX`` is replaced with the shorthand for a note type (TAP, CHR, FLK, MNE, HLD, SLD, AIR, AHD), as well as one field labeled ``T_REC_ALL``. Appears to be a count of the amount of notes of the specified type that are in each chart. ``T_REC_ALL`` is equal to the values of the preceeding ``T_REC_XXX`` fields added together.
+``XXX`` はノーツタイプの略語に置き換えられ、``T_REC_ALL`` というフィールドが1つ追加されます。多分だけどノーツの数を数えてる？
+T_REC_ALL`` は前の ``T_REC_XXX`` フィールドの値を足したものと同じになります。
 
 ## T_NOTE_XXX
 
-Seems to be identical to ``T_REC_XXX``, although the values are different from each other despite being in the same chart.
+T_REC_XXXと同じだと思うんだけど、、なんかおんなじ譜面なのに値が違う。
 
 ## T_NUM_XXX
 
-Seems to be identical to ``T_REC_XXX`` and ``T_NOTE_XXX``, although there is no ``T_XXX_ALL`` field,  instead there is an unknown ``T_NUM_AAC`` field.
+T_REC_XXX、T_NOTE_XXXと同じだと思うけど、T_XXX_ALLはなく、代わりによくわからんのT_NUM_AACが存在する。
+
 
 ## T_CHRTYPE_XX
 
-``XX`` is replaced with the shorthand for the CHR note's modifiers (UP, DW, CE). Appears to count the amount of CHR notes with the specified modifier in the track.
+XXは、CHRノーツのエフェクトの種類の略語に置き換えられます。トラック内の指定した修飾子を持つCHRノーツの量をカウントするためのものだよ。
+
 
 ## T_LEN_XXX
 
-``XXX`` is replaced with the shorthand for "sustain" notes (HLD, SLD, AHD, ALL), as well as one field labeled ``T_LEN_ALL``. Seems to be identical to ``T_REC_XXX``, although it instead counts the amount of milliseconds that the specified type of "sustain" note is active. ``T_LEN_ALL`` is equal to the values of the preceeding ``T_LEN_XXX`` fields added together.
+``XXXX`` はスライド系ノーツの略語に置き換えられ、さらに ``T_LEN_ALL`` がありました。
+``T_REC_XXX`` と同じように見えるけど、スライドノーツが有効であるミリ秒を数えるみたいだよ。
+``T_LEN_ALL`` は、前の ``T_LEN_XXX`` の値を足したものになります。
 
 ## T_JUDGE_XXX
 
-Unknown.
+知らん。
 
-## T_FIRST_XXXX
+## t_first_xxxx
 
-Has two tags, ``T_FIRST_MSEC`` and ``T_FIRST_RES``. Both denote the timestamp of the first note in milliseconds and resolution respectively.
+T_FIRST_MSEC`` と ``T_FIRST_RES`` という2つのタグがあるよ。どちらも、最初のノーツのタイムスタンプをミリ秒単位で表しているよ。
 
-## T_FINAL_XXXX
+## t_final_xxxx
 
-Has two tags, ``T_FINAL_MSEC`` and ``T_FINAL_RES``. Both denote the timestamp of the last note in milliseconds and resolution respectively. This is not necessarily equal to the timestamp of the note listed in the chart file, as sustained notes will move the timestamp to when the note is finished.
+T_FINAL_MSEC`` と ``T_FINAL_RES`` という二つのタグがあるっぽい。どちらも最後のノーツのタイムスタンプをミリ秒単位で、デュレーションを表している。これは譜面ファイルに記載されているノーツのタイムスタンプと同じじゃないよ。なんでかっていうと、ノーツが持続するとタイムスタンプはそのノーツが終了したときに移動するから。
 
 ## T_PROG_XX
 
-Has 20 tags, starting from ``T_PROG_00`` and progressing to ``T_PROG_95`` as the final tag in increments of 5. Unknown.
+20個のタグがあり、``T_PROG_00`` から始まり、最終タグの ``T_PROG_95`` まで、5個ずつ増えていきます。わからん。
 
-# Cosmetics
+# コスメティック
 
-This portion of the document will outline various cosmetic information on the notes found in game. This is NOT about generic information on the notes, like what the exact color of a note is, but rather the small details that might be useful to know when creating custom charts. This information does not have any bearing on gameplay.
+ゲーム内で見つけた外観上の面白そうな事を箇条書き形式で書いてるよ。役に立ててね。
 
-## Flick Notes
+## フリックノーツ
 
-Flick notes appear as a gray note with a small blue note inside of it. The blue note has a third of the width of the flick note and is centered on the note.
+フリックノーツは、灰色のノーツの中に小さな青いノーツが入った形で表示されるよ。青いノーツは、フリックノーツの3分の1の大きさで、ノーツの中央に配置されているよ。
 
-## Air/Down Notes
+## エア/ダウンノーツ
 
-Both air and down notes have an arrow either above or below the note that it leeches off of, which has the same width as the note in question. Angled versions of these notes are always angled in a way that points to the cell immediately to the left or right of the original note.
+エアノーツとダウンノーツには、ノーツの上か下に、そのノーツと同じ幅を持つ矢印が付いています。
+これらのノーツの角度付きバージョンは、常に元のノーツのすぐ左または右のセルを指すような角度になっています。
