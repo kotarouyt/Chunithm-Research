@@ -169,7 +169,7 @@ f = 拍子の分数
 ### 幅
 
 「セル」の数値とは別に、「幅」の数値は、セルに記載されている数値から**右方向**に伸びる音符の幅を指定するよ。最小値は1で、もし1だったらノーツがセルに記載された列だけ描画されることを意味するよ。
-他に、、セルの数値が7で、ノーツの幅が3だとすると、ノーツはプレイフィールド上のセル番号「7、8、9」列を占めることになるよ。
+他に、セルの数値が7で、ノーツの幅が3だとすると、ノーツはプレイフィールド上のセル番号「7、8、9」列を占めることになるよ。
 
 ## その他ノーツの値に関する情報
 
@@ -208,24 +208,26 @@ Ex-タップは普通のタップと似てるけど正確に打てば打つほ�
 | "CHR" | 小節 | オフセット | セル | 幅 | デュレーション |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 
-* デュレーション: どんだけ押し続けるか的な。
+* デュレーション: どんだけ押し続けるか的な。さっき説明したオフセットとおんなじ感じの値の計算方法を使ってるよ。
 
-### Slide
+### スライド
 
-Slide notes are similar to hold notes, but are capable of moving between cells while sustaining the hold. There are two types of slide notes, SLD and SLC. Slides that start with a straight line begin with an SLD, while slides that start immediately with movement start with an SLC. All slides end with an SLD note.
+あれあれ、あのーそう、ホールドノーツと似てるけど、スライドノーツは押しながら移動できるんだね...というかさっきから思ってるけどこの資料読んでる人絶対こういう知識あるよね、これ毎回説明する必要あります？
+スライドノーツには、SLDとSLCの2種類があるよ。直線で始まるスライドはSLDで始まり、すぐに動き出すスライドはSLCで始まる。すべてのスライドはSLDノートで終わる。
 
 #### Schema:
 
-| "SLD"/"SLC" | Measure | Offset | Cell | Width | Duration | End Cell | End Width |
+| "SLD"/"SLC" | 小節 | オフセット | セル | 幅 | デュレーション | 終わるセル | 終わる幅 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 
-* Duration: The amount of time that the note will take to move to the target cell. This value is based on the same format for offset.
-* End Cell: The column that the slide will move towards over the duration of the slide. Similar to the Cell value, this value will be where the left side of the cell is, and can be anywhere from 0-15. To have a slide that stays straight over the duration, make the End Cell value the same as the Cell value.
-* End Width: The width that the slide will have at the end of the duration. Similar to the Width value, this value can be anywhere between 1-16. If the End Width differs from the original Width, the slider will gradually shrink or expand in width over the course of the slide.
+* デュレーション: どんだけ押し続けるか的な。さっき説明したオフセットとおんなじ感じの値の計算方法を使ってるよ。
+* 終わるセル: スライドの継続時間中にスライドが移動する列。セルの値と同様に、0～15の範囲で設定できるよ。スライドが持続時間中、まっすぐなままなようにするには、終わるセルの値をセルの値と同じにする。
+* 終わる幅: 持続時間の終了時になってるスライド幅だよ。幅の値とおんなじように、この値は0～15の間の任意の場所に設定することができるよ。終わる幅が幅と違ったら、スライドの途中ででかくなったり小さくなったりするよ。
 
-A slide will not end until you call an SLD in the same cell that another slide is in at that moment in time, without having another slide follow afterwards. Having an SLD in the middle of a continuous slide will add an additional blue note at that specific point, which is purely cosmetic. To adjust a slide without adding another note, use SLC.
+スライドは、その時点で別のスライドがある同じセルでSLDを呼び出すまで、その後に別のスライドが続くことなく終了します。連続したスライドの途中でSLDを呼び出すと、
+その特定のポイントに青い音符が追加されますが、これは純粋に外観上のものです。別の音符を追加せずにスライドを調整するには、SLCを使用します。
 
-The feature of sliders shaking from side to side rapidly is not a built-in function of the game, it instead simply involves having the slider move left and right a few cells on very short offsets.
+スライダーが左右に激しく揺れるのは、ゲームに組み込まれた機能ではなく、単にスライダーが非常に短いオフセットで数セル左右に動くだけのものです。
 
 ### Flick
 
