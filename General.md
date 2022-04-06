@@ -1,30 +1,38 @@
-This is a list of general information that should be known regarding Chunithm's file format, as well as this collection of research. This includes a list of files of interest, the general overview of them, and links to additional documentation if available, as well as meta information about this research document.
+このファイルは、Chunithmのファイル形式、およびこの文書に関して知っておくべき一般的な情報です。
 
-# Meta
+# Tips
 
-* This guide is **not** guaranteed to be up to date with the current version of Chunithm. This guide was written with Chunithm Paradise in mind. While I assume that almost all information here will continue to be relevant in later versions of Chunithm, I cannot guarantee that it will be 100% compatible with later releases, such as Paradise Lost and NEW. Additionally, AIR SLIDE notes and AIR CRUSH notes, which made their appearances in NEW, do not have charting documentation yet. This may change in the future.
-* This is **not** a guide for creating custom songs in Chunithm "clones". This includes programs like SUSPlayer, Laverita, or Seaurchin. These games use different chart formats and have an entirely different, usually streamlined, way of implementing custom songs.
-* Chunithm makes frequent use of ``.xml`` files. This document will, for the sake of simplicity, assume that you understand the basic format of ``.xml`` files.
-* References to "music" and "song" will refer to the files in the ``music`` folder, which includes ``Music.xml``, as well as the chart files. References to ``audio`` will refer to the files in the ``cueFile`` folder.
-* If anyone makes a tool to streamline any process outlined in this document, while credit to this document obviously isn't required (see [UNLICENSE](https://github.com/Suprnova123/Chunithm-Research/blob/main/UNLICENSE)), it would still be appreciated.
+* このガイドは、現在のCHUNITHMの、バージョンに対応していない可能性があります。多分後継のバージョンでも引き続き有効ではあると思っているけれど、NEWとか、NEW PLUSとかだとわからないよ。(このガイドはParadiseを念頭に研究されています。)また、NEWで登場した、エアースライドや、エアークラッシュ
+ノーツにはまだ解説がありません。今後追加される可能性があります。
+* このガイドは、CHUNITHMのいわゆる"シミュレーター"でカスタム曲を作成するためのガイドではありません。(SUSPlayer,Laverita,Seaurchinとかね。)これとかのシミュレーターっていうのは、異なる譜面形式をしてるから、カスタム曲の実装方法もぜんぜん違うよ。
+* CHUNITHMでは、よく"XML"ファイルフォーマットを使用するよ。このガイドはあなたがXMLについての知識があることを前提にして話を進めます。
+* "music"、"song"はどっちも、Music.xmlを含むmusicフォルダー内のファイル、または譜面ファイルを指すよ。audioはcueFileフォルダー内のファイルを指すよ。
+* この文書で説明されているプロセスを効率化するツールを作る人がいれば、この文書へのクレジット表記は当然必要ありませんが[UNLICENSE](https://github.com/Suprnova123/Chunithm-Research/blob/main/UNLICENSE))参照）、それでもやってくれたら嬉しいよね。
 
-# How Songs End
 
-When playing a song in Chunithm, the chart will "end" after the last note. This is where the animation for the progress bar at the top and the FULL COMBO/ALL JUSTICE graphic appear. However, the song will "end" after the audio file is finished playing. This is where any skills that occur at the end of a song (such as SUPPORT skills) will activate, and the results screen will appear shortly after.
 
-# MASTER and WORLD'S END Difficulties
 
-MASTER difficulties for songs are inaccessible unless one of two conditions are fulfilled:
+# 曲の終わり方。
 
-* The player has passed the EXPERT difficulty of the song with an S rank or higher, OR
+CHUNITHMで曲をプレイすると、最後のノーツの後に譜面が終了するよ。やったあ。この時上部のプログレスバーと「フルコンボッ！」と「おーるじゃすてぃす」のアニメーションが出てきます。(まあ取ってないと出てこないけど。)その後にリザルト画面が表示されるよ。
 
-* The player is using a ticket that allows playing MASTER difficulty songs. (Noted as enabled in the ticket's ``Ticket.xml`` file under the ``<playMaster>`` field)
+# MASTER譜面とWORLD'S END譜面とUltima譜面について。
 
-When creating custom songs, it is important to note this. Charters should always have a valid, completable chart for the EXPERT difficulty if they intend to have their chart have a MASTER difficulty. Otherwise, the chart should be set to one of the other 3 normal difficulties.
+楽曲のMASTER譜面は、次の2つの条件を満たさないと遊べないよ。
 
-WORLD'S END difficulties for songs are inaccessible unless the player is using a ticket that allows playing WORLD'S END songs. (Noted as enabled in the ticket's ``Ticket.xml`` file under the ``<playWorldsEnd>`` field) When creating custom songs, it is inadvisable to create WORLD'S END charts. It is impossible for the player to access these charts unless they are connected to an AIME or Minime server, and purchase or cheat in a WORLD'S END ticket.
+* EXPERT譜面(または下の方法で遊んだMASTER譜面)でS以上を取る。
 
-# Folders
+* MASTER譜面が遊べるチケットを使う。
+
+カスタム譜面を作成するんだったらこの点に注意する必要があるよ。もしMASTER譜面をやるんだったらEXPERT譜面を作らないとこまるかもね...まあEXPERTとか他3つに設定すればいいんだけどさ。
+
+WORLD'S END譜面：
+チケットを買わないと絶対に遊べないよ。カスタム曲やるんだったら、めんどくさいからやらないほうがいいと思うな～～～。
+
+Ultima譜面：
+WORLD'S END譜面とおんなじでチケットを買わないと遊べないよ。今のところこの難易度は運営が削除曲を追加する時に、作り直しの意味で追加する時に使われてるよ。
+
+# フォルダー
 
 Chunithm's method of receiving updates involves storing the new information in separate "AXXX" folders, found in ``root¥app¥data``. These folders will have varying numbers replacing the Xs depending on the update. Any references to "AXXX" in this document will refer to an unspecified ``A`` Folder. It is worth noting that, while songs usually have their complementary files (audio, jackets, rights) in the same ``A`` folder, it is possible that they are also in other folders. At the moment, it is assumed that newer AXXX folders will overwrite the older AXXX folders' data in terms of being in-game, although the older files will remain intact, however this is not confirmed. It is worth noting that Chunithm's updates will regularly remove certain songs that were prexisting, usually from rights expiring. It is also worth noting that the major updates for Chunithm that change branding and add new features (for example, Amazon to Crystal, or Crystal to Paradise) will not involve new AXXX files, instead condensing them all into the A000 folder. The .exe in ``root¥app¥bin`` may also be overwritten, among other binaries.
 
